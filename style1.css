@@ -1,0 +1,200 @@
+:root {
+  --primary: #fff;
+  --bg-color: pink;
+  --heart-color: rgb(252, 8, 231);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--bg-color);
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: background-image 1s ease-in-out, background-color 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+}
+
+body.bg-animated::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+  background-size: 400% 400%;
+  animation: gradientFlow 12s ease infinite;
+  opacity: 0.5;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.envelope-wrapper {
+  background: #f5edd1;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope {
+  position: relative;
+  width: 300px;
+  height: 230px;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  border-top: 130px solid #ecdeb8;
+  border-right: 150px solid transparent;
+  border-left: 150px solid transparent;
+  transform-origin: top;
+  transition: all 0.5s ease-in-out 0.7s;
+}
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-top: 130px solid transparent;
+  border-right: 150px solid #e6cfa7;
+  border-bottom: 100px solid #e6cfa7;
+  border-left: 150px solid #e6cfa7;
+}
+
+.letter {
+  position: absolute;
+  right: 20%;
+  bottom: 0;
+  width: 54%;
+  height: 80%;
+  background: var(--primary);
+  text-align: center;
+  transition: all 1s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px 10px;
+  overflow: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  z-index: 1;
+}
+
+.letter .text {
+  color: #444;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--heart-color);
+  transform: translate(-50%, -20%) rotate(45deg);
+  transition: transform 0.5s ease-in-out 1s;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 4;
+}
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: var(--heart-color);
+  border-radius: 50%;
+}
+.heart::before { top: -7.5px; }
+.heart::after { right: 7.5px; }
+
+.flap .envelope::before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+.flap .letter {
+  bottom: 100px;
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.5s;
+}
+.flap .heart {
+  transform: rotate(90deg);
+  transition-delay: 0.4s;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(100vh) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(2); opacity: 0; }
+}
+.floating-heart {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: var(--heart-color);
+  transform: rotate(45deg);
+  animation: floatHeart 4s ease-in forwards;
+  z-index: 1000;
+}
+.floating-heart::before,
+.floating-heart::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: var(--heart-color);
+  border-radius: 50%;
+}
+.floating-heart::before { top: -15px; left: 0; }
+.floating-heart::after { left: -15px; top: 0; }
+
+/* 💞 Orbit hearts */
+.orbit-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--heart-color);
+  border-radius: 50%;
+  transform-origin: center center;
+  animation: spin 3s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}

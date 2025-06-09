@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Letter Animation</title>
+  <link rel="stylesheet" href="style1.css" />
+     <style>
+        /* Style for the new button */
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 35px;
+            padding: 12px 85px;
+            background-color: #ff6b9e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 158, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            animation: pulse 2s infinite;
+        }
+        
+        .back-btn:hover {
+            background-color: #ff4785;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 158, 0.6);
+        }
+        
+        .back-btn:active {
+            transform: scale(0.98);
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 158, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 107, 158, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 158, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+   <button class="back-btn" onclick="window.location.href='flower.html'">Back to Flowers</button>
+  <div class="container">
+    <div class="envelope-wrapper">
+      <div class="envelope">
+        <div class="letter">
+          <div class="text">
+            <strong>Dear You,</strong>
+            <p>  
+              អូនស្រឡាញបងវាសនា
+                បងអាចអោយអូន
+              មើលថែបេះដូងបងបានទេ 
+             អូនគឺជាស្នេហាពិត ជាគូរព្រេងរបស់បង 💖  
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="heart"></div>
+    </div>
+  </div>
+
+  <!-- 🔊 Audio -->
+  <audio id="openSound" src="love.mp3"></audio>
+
+  <script>
+    const envelope = document.querySelector('.envelope-wrapper');
+    const sound = document.getElementById('openSound');
+    let isOpened = false;
+
+    envelope.addEventListener('click', () => {
+      envelope.classList.toggle('flap');
+      isOpened = !isOpened;
+
+      if (isOpened) {
+        sound.currentTime = 0;
+        sound.play();
+
+        document.body.style.backgroundImage = "url('love1.jpg')";
+        document.body.style.backgroundColor = "transparent";
+        document.body.classList.add("bg-animated");
+
+        // 💖 Floating up hearts
+        for (let i = 0; i < 20; i++) {
+          const heart = document.createElement('div');
+          heart.classList.add('floating-heart');
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.animationDuration = (2 + Math.random() * 2) + "s";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 4000);
+        }
+
+        // 💞 Hearts rotating around envelope
+        for (let i = 0; i < 8; i++) {
+          const orbitHeart = document.createElement('div');
+          orbitHeart.classList.add('orbit-heart');
+          orbitHeart.style.transform = `rotate(${i * 45}deg) translateX(120px)`;
+          document.querySelector('.envelope-wrapper').appendChild(orbitHeart);
+        }
+
+      } else {
+        sound.pause();
+        sound.currentTime = 0;
+        document.body.style.backgroundImage = "none";
+        document.body.style.backgroundColor = "pink";
+        document.body.classList.remove("bg-animated");
+
+        // 🧹 Remove orbit hearts
+        document.querySelectorAll('.orbit-heart').forEach(h => h.remove());
+      }
+    });
+  </script>
+</body>
+</html>
